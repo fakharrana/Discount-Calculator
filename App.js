@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback } from 'react-native';
 
 export default class App extends React.Component {
   constructor() {
@@ -9,7 +9,35 @@ export default class App extends React.Component {
       discountPercentage: null,
       youSaved: "You Saved",
       finalPrice: "Final Price",
+      originalPriceList: [],
+      discountPercentageList: [],
+      finalPriceList: [],
+      dataAdded: false,
     };
+  }
+
+  saveList = () => {
+    // myArray: [...this.state.myArray, 'new value']
+    if (this.state.dataAdded === true) {
+      this.setState({
+        originalPriceList: [...this.state.originalPriceList, this.state.originalPrice],
+        discountPercentageList: [...this.state.discountPercentageList, this.state.discountPercentage],
+        finalPriceList: [...this.state.finalPriceList, this.state.finalPrice],
+        originalPrice: null,
+        discountPercentage: null,
+        youSaved: "You Saved",
+        finalPrice: "Final Price",
+        dataAdded: false,
+      })
+      alert("Price List successfully saved.")
+    }
+    else {
+      alert("Please add some data first.")
+    }
+    console.log(this.state.originalPriceList);
+    console.log(this.state.discountPercentageList);
+    console.log(this.state.finalPriceList);
+
   }
 
   update = () => {
@@ -43,8 +71,7 @@ export default class App extends React.Component {
       this.setState({
         youSaved: youSaved,
         finalPrice: finalPrice,
-        originalPrice: null,
-        discountPercentage: null,
+        dataAdded: true,
       });
     }
   };
@@ -127,6 +154,23 @@ export default class App extends React.Component {
               color: "red",
             }}
           > {this.state.finalPrice} </Text>
+        </View>
+
+        <View style={{ marginTop: "10%" }}>
+          <TouchableWithoutFeedback onPress={this.saveList}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                height: 40,
+                width: 150,
+                textAlign: 'center',
+                paddingTop: 11,
+                borderColor: 'lightseagreen',
+                borderRadius: 25,
+                color: "white",
+                backgroundColor: "lightseagreen"
+              }}>Save</Text>
+          </TouchableWithoutFeedback>
         </View>
 
       </View>
