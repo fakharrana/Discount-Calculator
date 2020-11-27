@@ -7,8 +7,8 @@ export default class App extends React.Component {
     this.state = {
       originalPrice: null,
       discountPercentage: null,
-      youSaved: null,
-      finalPrice: null,
+      youSaved: "You Saved",
+      finalPrice: "Final Price",
     };
   }
 
@@ -17,7 +17,26 @@ export default class App extends React.Component {
       (this.state.originalPrice * this.state.discountPercentage) / 100;
     const finalPrice = this.state.originalPrice - youSaved;
 
-    if (
+    if (this.state.discountPercentage > 100) {
+      alert("Discount cannot be more than 100%")
+      this.setState({
+        discountPercentage: null,
+      });
+    }
+    else if (this.state.discountPercentage < 0) {
+      alert("Discount cannot be less than 0%")
+      this.setState({
+        discountPercentage: null,
+      });
+    }
+    else if (this.state.originalPrice < 0) {
+      alert("Price cannot be less than 0")
+      this.setState({
+        originalPrice: null,
+      });
+
+    }
+    else if (
       this.state.originalPrice != null &&
       this.state.discountPercentage != null
     ) {
@@ -33,16 +52,23 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+
+        <Text style={{ marginBottom: 40, fontSize: 30, fontWeight: "bold", color: "red" }}>DISCOUNT CALCULATOR</Text>
+
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <TextInput
             style={{
+              fontWeight: "bold",
               height: 40,
               marginRight: 20,
               width: 150,
               textAlign: 'center',
               borderColor: 'gray',
-              borderWidth: 1,
+              borderWidth: 2,
+              borderRadius: 25,
+              color: "red",
             }}
+            placeholderTextColor="green"
             value={this.state.originalPrice}
             placeholder="Original Price"
             keyboardType="number-pad"
@@ -51,12 +77,16 @@ export default class App extends React.Component {
           />
           <TextInput
             style={{
+              fontWeight: "bold",
               height: 40,
               width: 150,
               textAlign: 'center',
               borderColor: 'gray',
-              borderWidth: 1,
+              borderWidth: 2,
+              borderRadius: 25,
+              color: "red",
             }}
+            placeholderTextColor="green"
             value={this.state.discountPercentage}
             placeholder="Discount Percentage"
             keyboardType="number-pad"
@@ -67,10 +97,38 @@ export default class App extends React.Component {
           />
         </View>
 
-        <View style={{ marginTop: 8 }}>
-          <Text>You Saved : {this.state.youSaved}</Text>
-          <Text>Final Price : {this.state.finalPrice}</Text>
+
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+          <Text
+            style={{
+              fontWeight: "bold",
+              height: 40,
+              marginRight: 20,
+              width: 150,
+              textAlign: 'center',
+              paddingTop: 11,
+              borderColor: 'gray',
+              borderWidth: 2,
+              borderRadius: 25,
+              color: "red",
+            }}
+          >{this.state.youSaved} </Text>
+          <Text
+            style={{
+              fontWeight: "bold",
+              height: 40,
+              width: 150,
+              textAlign: 'center',
+              paddingTop: 11,
+              borderColor: 'gray',
+              borderWidth: 2,
+              borderRadius: 25,
+              color: "red",
+            }}
+          > {this.state.finalPrice} </Text>
         </View>
+
       </View>
     );
   }
@@ -82,5 +140,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 40
   },
 });
