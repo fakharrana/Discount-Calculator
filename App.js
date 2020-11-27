@@ -1,5 +1,14 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableWithoutFeedback } from 'react-native';
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableWithoutFeedback,
+  Modal,
+  TouchableHighlight,
+  ScrollView,
+} from "react-native";
 
 export default class App extends React.Component {
   constructor() {
@@ -9,36 +18,34 @@ export default class App extends React.Component {
       discountPercentage: null,
       youSaved: "You Saved",
       finalPrice: "Final Price",
-      originalPriceList: [],
-      discountPercentageList: [],
-      finalPriceList: [],
       dataAdded: false,
+      modalVisible: false,
+      list: [],
     };
   }
 
   saveList = () => {
-    // myArray: [...this.state.myArray, 'new value']
     if (this.state.dataAdded === true) {
+      const temp = this.state.list;
+      temp.push({
+        originalPrice: this.state.originalPrice,
+        discountPercentage: this.state.discountPercentage,
+        finalPrice: this.state.finalPrice,
+      });
       this.setState({
-        originalPriceList: [...this.state.originalPriceList, this.state.originalPrice],
-        discountPercentageList: [...this.state.discountPercentageList, this.state.discountPercentage],
-        finalPriceList: [...this.state.finalPriceList, this.state.finalPrice],
+        list: temp,
         originalPrice: null,
         discountPercentage: null,
-        youSaved: "You Saved",
+        youSaved: " You Saved",
         finalPrice: "Final Price",
         dataAdded: false,
-      })
-      alert("Price List successfully saved.")
-    }
-    else {
-      alert("Please add some data first.")
-    }
-    console.log(this.state.originalPriceList);
-    console.log(this.state.discountPercentageList);
-    console.log(this.state.finalPriceList);
+      });
 
-  }
+      alert("Price List successfully saved.");
+    } else {
+      alert("Please add some data first.");
+    }
+  };
 
   update = () => {
     const youSaved =
@@ -46,25 +53,21 @@ export default class App extends React.Component {
     const finalPrice = this.state.originalPrice - youSaved;
 
     if (this.state.discountPercentage > 100) {
-      alert("Discount cannot be more than 100%")
+      alert("Discount cannot be more than 100%");
       this.setState({
         discountPercentage: null,
       });
-    }
-    else if (this.state.discountPercentage < 0) {
-      alert("Discount cannot be less than 0%")
+    } else if (this.state.discountPercentage < 0) {
+      alert("Discount cannot be less than 0%");
       this.setState({
         discountPercentage: null,
       });
-    }
-    else if (this.state.originalPrice < 0) {
-      alert("Price cannot be less than 0")
+    } else if (this.state.originalPrice < 0) {
+      alert("Price cannot be less than 0");
       this.setState({
         originalPrice: null,
       });
-
-    }
-    else if (
+    } else if (
       this.state.originalPrice != null &&
       this.state.discountPercentage != null
     ) {
@@ -79,18 +82,26 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text
+          style={{
+            marginBottom: 40,
+            fontSize: 30,
+            fontWeight: "bold",
+            color: "red",
+          }}
+        >
+          DISCOUNT CALCULATOR
+        </Text>
 
-        <Text style={{ marginBottom: 40, fontSize: 30, fontWeight: "bold", color: "red" }}>DISCOUNT CALCULATOR</Text>
-
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <TextInput
             style={{
               fontWeight: "bold",
               height: 40,
               marginRight: 20,
               width: 150,
-              textAlign: 'center',
-              borderColor: 'gray',
+              textAlign: "center",
+              borderColor: "gray",
               borderWidth: 2,
               borderRadius: 25,
               color: "red",
@@ -107,8 +118,8 @@ export default class App extends React.Component {
               fontWeight: "bold",
               height: 40,
               width: 150,
-              textAlign: 'center',
-              borderColor: 'gray',
+              textAlign: "center",
+              borderColor: "gray",
               borderWidth: 2,
               borderRadius: 25,
               color: "red",
@@ -124,36 +135,45 @@ export default class App extends React.Component {
           />
         </View>
 
-
-
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 20,
+          }}
+        >
           <Text
             style={{
               fontWeight: "bold",
               height: 40,
               marginRight: 20,
               width: 150,
-              textAlign: 'center',
+              textAlign: "center",
               paddingTop: 11,
-              borderColor: 'gray',
+              borderColor: "gray",
               borderWidth: 2,
               borderRadius: 25,
               color: "red",
             }}
-          >{this.state.youSaved} </Text>
+          >
+            {this.state.youSaved}{" "}
+          </Text>
           <Text
             style={{
               fontWeight: "bold",
               height: 40,
               width: 150,
-              textAlign: 'center',
+              textAlign: "center",
               paddingTop: 11,
-              borderColor: 'gray',
+              borderColor: "gray",
               borderWidth: 2,
               borderRadius: 25,
               color: "red",
             }}
-          > {this.state.finalPrice} </Text>
+          >
+            {" "}
+            {this.state.finalPrice}{" "}
+          </Text>
         </View>
 
         <View style={{ marginTop: "10%" }}>
@@ -163,16 +183,147 @@ export default class App extends React.Component {
                 fontWeight: "bold",
                 height: 40,
                 width: 150,
-                textAlign: 'center',
+                textAlign: "center",
                 paddingTop: 11,
-                borderColor: 'lightseagreen',
+                borderColor: "lightseagreen",
                 borderRadius: 25,
                 color: "white",
-                backgroundColor: "lightseagreen"
-              }}>Save</Text>
+                backgroundColor: "lightseagreen",
+              }}
+            >
+              Save
+            </Text>
           </TouchableWithoutFeedback>
         </View>
 
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+        >
+          <View style={styles.modalView}>
+            <View style={{ justifyContent: "center", marginTop: "10%" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 19,
+                    marginRight: "5%",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Original Price
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 19,
+                    marginRight: "4%",
+                    fontWeight: "bold",
+                  }}
+                >
+                  - Discount
+                </Text>
+                <Text style={{ fontSize: 19, fontWeight: "bold" }}>
+                  = Final Price
+                </Text>
+              </View>
+
+              <ScrollView>
+                {this.state.list.map((item, index) => (
+                  <View
+                    key={index.toString}
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 19,
+                        marginRight: "4%",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.originalPrice}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 19,
+                        marginRight: "3%",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.discountPercentage}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 19,
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.finalPrice}
+                    </Text>
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
+
+            <View style={{ marginTop: "4%" }}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  this.setState({ modalVisible: false });
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    height: 40,
+                    width: 150,
+                    textAlign: "center",
+                    paddingTop: 11,
+                    borderColor: "lightseagreen",
+                    borderRadius: 25,
+                    color: "white",
+                    backgroundColor: "lightseagreen",
+                  }}
+                >
+                  Close
+                </Text>
+              </TouchableWithoutFeedback>
+            </View>
+          </View>
+        </Modal>
+
+        <View style={{ marginTop: "4%" }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.setState({ modalVisible: true });
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "bold",
+                height: 40,
+                width: 150,
+                textAlign: "center",
+                paddingTop: 11,
+                borderColor: "lightseagreen",
+                borderRadius: 25,
+                color: "white",
+                backgroundColor: "lightseagreen",
+              }}
+            >
+              View History
+            </Text>
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     );
   }
@@ -181,9 +332,16 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 40
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 40,
+  },
+  modalView: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 40,
   },
 });
