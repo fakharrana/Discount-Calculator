@@ -259,7 +259,7 @@ const App = () => {
           <View style={{ marginTop: "4%" }}>
             <TouchableWithoutFeedback
               onPress={() => {
-                setModalVisible(true);
+                setModalVisible(false);
               }}
             >
               <Text
