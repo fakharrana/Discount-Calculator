@@ -5,8 +5,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  ScrollView,
-  Button,
 } from 'react-native';
 
 const DiscountCalculatorComponent = ({ navigation , route }) => {
@@ -15,7 +13,6 @@ const DiscountCalculatorComponent = ({ navigation , route }) => {
   const [getYouSaved, setYouSaved] = useState('You Saved');
   const [getFinalPrice, setFinalPrice] = useState('Final Price');
   const [getDataAdded, setDataAdded] = useState(false);
-  const [getModalVisible, setModalVisible] = useState(false);
   const [getList, setList] = useState([]);
 
   useEffect(() => {
