@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "discountcalculatorapp",
-    "slug": "discountcalculatorapp",
+    "name": "discount-calculator-app",
+    "slug": "snack-005af155-834d-43b6-8248-ebe3c24a975a",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "An app which calculates discount  according to a given percentage and maintains history too."
   }
 }

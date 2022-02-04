@@ -20,11 +20,12 @@ const DiscountCalculatorComponent = ({ navigation , route }) => {
     if (route.params?.returnDataList) {
       setList(route.params.returnDataList);
     }
-  });
+  },[]);
 
   navigation.setOptions({
     headerRight: () => (
       <TouchableOpacity
+      style={{marginRight: 6}}
         activeOpacity={0.4}
         onPress={() => navigation.navigate('History', { dataList: getList })}>
         <Text style={styles.historyButton}>History</Text>
@@ -82,9 +83,7 @@ const DiscountCalculatorComponent = ({ navigation , route }) => {
 
 
   const calculate = () => {
-    const youSaved = ((getOriginalPrice * getDiscountPercentage) / 100).toFixed(
-      2
-    );
+    const youSaved = ((getOriginalPrice * getDiscountPercentage) / 100).toFixed(2);
     const finalPrice = (getOriginalPrice - youSaved).toFixed(2);
     if (getOriginalPrice != null && getDiscountPercentage != null) {
       setYouSaved(youSaved);
@@ -215,8 +214,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'white',
     paddingLeft: 10,
-    padding: 4,
-    marginRight: 10,
+    paddingRight: 10,
+    paddingTop: 4,
+    paddingBottom: 4,
     borderRadius: 18,
     backgroundColor: 'white',
   },

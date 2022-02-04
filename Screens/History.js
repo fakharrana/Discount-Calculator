@@ -37,7 +37,7 @@ const HistoryComponent = ({ navigation, route }) => {
           Clear
         </Text>
       </TouchableOpacity>
-    ),
+   ),
 
      headerLeft: () => (
       <View style={{ paddingLeft: 10 }}>
